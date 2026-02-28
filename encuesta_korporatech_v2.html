@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korporatech – Valoración</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #161920;
+    --border: #22262f;
+    --accent: #00e5c0;
+    --text: #e8eaf0;
+    --muted: #7a7f8e;
+    --red: #ff4757;
+    --orange: #ffa502;
+    --green: #2ed573;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,229,192,0.08), transparent);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 56px 48px;
+    max-width: 560px;
+    width: 100%;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 40px;
+    justify-content: center;
+  }
+
+  .logo-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--accent), #0090ff);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: #0d0f14;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--accent), #7af0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .headline {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .headline h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .headline h1 span { color: var(--accent); }
+
+  .smiles {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-bottom: 44px;
+  }
+
+  .smile-btn {
+    background: none;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 18px 22px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    width: 110px;
+  }
+
+  .smile-btn:hover { transform: translateY(-4px); }
+
+  .smile-btn .emoji {
+    font-size: 44px;
+    line-height: 1;
+    filter: grayscale(60%);
+    transition: filter 0.2s, transform 0.2s;
+  }
+
+  .smile-btn:hover .emoji,
+  .smile-btn.active .emoji {
+    filter: none;
+    transform: scale(1.15);
+  }
+
+  .smile-btn .label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .smile-btn.red    { --clr: var(--red);    }
+  .smile-btn.orange { --clr: var(--orange); }
+  .smile-btn.green  { --clr: var(--green);  }
+
+  .smile-btn.active,
+  .smile-btn:hover {
+    border-color: var(--clr);
+    background: color-mix(in srgb, var(--clr) 8%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--clr) 20%, transparent);
+  }
+
+  .smile-btn.active .label { color: var(--clr); }
+
+  .comment-label {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+  }
+
+  .comment-label strong { color: var(--text); font-weight: 500; }
+
+  textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  textarea:focus { border-color: var(--accent); }
+  textarea::placeholder { color: var(--muted); }
+
+  .btn-submit {
+    margin-top: 28px;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(90deg, var(--accent), #0090ff);
+    border: none;
+    border-radius: 12px;
+    color: #0d0f14;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    position: relative;
+  }
+
+  .btn-submit:hover   { opacity: 0.9; transform: translateY(-1px); }
+  .btn-submit:active  { transform: translateY(0); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Spinner inside button */
+  .spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(13,15,20,0.3);
+    border-top-color: #0d0f14;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform 0.4s cubic-bezier(.22,1,.36,1), opacity 0.3s;
+    opacity: 0;
+    white-space: nowrap;
+    color: #0d0f14;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .toast.success { background: var(--green); }
+  .toast.error   { background: var(--red); color: #fff; }
+
+  /* Config notice */
+  .config-notice {
+    background: rgba(255,165,0,0.1);
+    border: 1px solid rgba(255,165,0,0.3);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #ffa502;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .config-notice strong { color: #ffcc70; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <div class="logo-icon">KT</div>
+    <div class="logo-text">Korporatech</div>
+  </div>
+
+  <!-- Headline -->
+  <div class="headline">
+    <h1>¿Cómo valoraría<br><span>nuestra atención</span>?</h1>
+  </div>
+
+  <!-- Smiles -->
+  <div class="smiles">
+    <button class="smile-btn red"    data-value="Mala"    onclick="selectSmile(this)">
+      <span class="emoji">😞</span>
+      <span class="label">Mala</span>
+    </button>
+    <button class="smile-btn orange" data-value="Regular" onclick="selectSmile(this)">
+      <span class="emoji">😐</span>
+      <span class="label">Regular</span>
+    </button>
+    <button class="smile-btn green"  data-value="Buena"   onclick="selectSmile(this)">
+      <span class="emoji">😊</span>
+      <span class="label">Buena</span>
+    </button>
+  </div>
+
+  <!-- Comment -->
+  <div class="comment-label">
+    <strong>¿Tiene algo que añadir?</strong>
+  </div>
+  <textarea id="comment" placeholder="Escriba aquí sus comentarios o sugerencias..."></textarea>
+
+  <!-- Submit -->
+  <button class="btn-submit" id="btnEnviar" onclick="submitRating()">Enviar valoración</button>
+
+  <!-- Aviso si no está configurado el script -->
+  <div class="config-notice" id="configNotice">
+    ⚙️ <strong>Pendiente de configurar:</strong> Reemplaza <code>TU_URL_AQUI</code> en el código con la URL de tu Google Apps Script.
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ============================================================
+  //  ⚙️  PON AQUÍ LA URL DE TU GOOGLE APPS SCRIPT
+  //  (la obtienes al publicar el script como "aplicación web")
+  // ============================================================
+  const SCRIPT_URL = "https://script.google.com/accounts?authuser=3&continueUrl=https%3A%2F%2Fscript.google.com%2Faccounts%3Fauthuser%3D3%26continueUrl%3Dhttps%253A%252F%252Fscript.google.com%252Faccounts%253Fauthuser%253D3%2526continueUrl%253Dhttps%25253A%25252F%25252Fscript.google.com%25252Faccounts%25253Fauthuser%25253D3%252526continueUrl%25253Dhttps%2525253A%2525252F%2525252Fscript.google.com%2525252Faccounts%2525253Fauthuser%2525253D3%25252526continueUrl%2525253Dhttps%252525253A%252525252F%252525252Fscript.google.com%252525252Faccounts%252525253Fauthuser%252525253D3%2525252526continueUrl%252525253Dhttps%25252525253A%25252525252F%25252525252Fscript.google.com%25252525252Faccounts%25252525253Fauthuser%25252525253D3%252525252526continueUrl%25252525253Dhttps%2525252525253A%2525252525252F%2525252525252Fscript.google.com%2525252525252Faccounts%2525252525253Fauthuser%2525252525253D3%25252525252526continueUrl%2525252525253Dhttps%252525252525253A%252525252525252F%252525252525252Fscript.google.com%252525252525252Faccounts%252525252525253Fauthuser%252525252525253D3%2525252525252526continueUrl%252525252525253Dhttps%25252525252525253A%25252525252525252F%25252525252525252Fscript.google.com%25252525252525252Faccounts%25252525252525253Fauthuser%25252525252525253D3%252525252525252526continueUrl%25252525252525253Dhttps%2525252525252525253A%2525252525252525252F%2525252525252525252Fscript.google.com%2525252525252525252Faccounts%2525252525252525253Fauthuser%2525252525252525253D3%25252525252525252526continueUrl%2525252525252525253Dhttps%252525252525252525253A%252525252525252525252F%252525252525252525252Fscript.google.com%252525252525252525252Faccounts%252525252525252525253Fauthuser%252525252525252525253D3%2525252525252525252526continueUrl%252525252525252525253Dhttps%25252525252525252525253A%25252525252525252525252F%25252525252525252525252Fscript.google.com%25252525252525252525252Faccounts%25252525252525252525253Fauthuser%25252525252525252525253D3%252525252525252525252526continueUrl%25252525252525252525253Dhttps%2525252525252525252525253A%2525252525252525252525252F%2525252525252525252525252Fscript.google.com%2525252525252525252525252Faccounts%2525252525252525252525253Fauthuser%2525252525252525252525253D3%25252525252525252525252526continueUrl%2525252525252525252525253Dhttps%252525252525252525252525253A%252525252525252525252525252F%252525252525252525252525252Fscript.google.com%252525252525252525252525252Faccounts%252525252525252525252525253Fauthuser%252525252525252525252525253D3%2525252525252525252525252526continueUrl%252525252525252525252525253Dhttps%25252525252525252525252525253A%25252525252525252525252525252F%25252525252525252525252525252Fscript.google.com%25252525252525252525252525252Faccounts%25252525252525252525252525253Fauthuser%25252525252525252525252525253D3%252525252525252525252525252526continueUrl%25252525252525252525252525253Dhttps%2525252525252525252525252525253A%2525252525252525252525252525252F%2525252525252525252525252525252Fscript.google.com%2525252525252525252525252525252Faccounts%2525252525252525252525252525253Fauthuser%2525252525252525252525252525253D3%25252525252525252525252525252526continueUrl%2525252525252525252525252525253Dhttps%252525252525252525252525252525253A%252525252525252525252525252525252F%252525252525252525252525252525252Fscript.google.com%252525252525252525252525252525252Faccounts%252525252525252525252525252525253Fauthuser%252525252525252525252525252525253D3%2525252525252525252525252525252526continueUrl%252525252525252525252525252525253Dhttps%25252525252525252525252525252525253A%25252525252525252525252525252525252F%25252525252525252525252525252525252Fscript.google.com%25252525252525252525252525252525252Faccounts%25252525252525252525252525252525253Fauthuser%25252525252525252525252525252525253D3%252525252525252525252525252525252526continueUrl%25252525252525252525252525252525253Dhttps%2525252525252525252525252525252525253A%2525252525252525252525252525252525252F%2525252525252525252525252525252525252Fscript.google.com%2525252525252525252525252525252525252Faccounts%2525252525252525252525252525252525253Fauthuser%2525252525252525252525252525252525253D3%25252525252525252525252525252525252526continueUrl%2525252525252525252525252525252525253Dhttps%252525252525252525252525252525252525253A%252525252525252525252525252525252525252F%252525252525252525252525252525252525252Fscript.google.com%252525252525252525252525252525252525252Faccounts%252525252525252525252525252525252525253Fauthuser%252525252525252525252525252525252525253D3%2525252525252525252525252525252525252526continueUrl%252525252525252525252525252525252525253Dhttps%25252525252525252525252525252525252525253A%25252525252525252525252525252525252525252F%25252525252525252525252525252525252525252Fscript.google.com%25252525252525252525252525252525252525252Faccounts%25252525252525252525252525252525252525253Fauthuser%25252525252525252525252525252525252525253D3%252525252525252525252525252525252525252526continueUrl%25252525252525252525252525252525252525253Dhttps%2525252525252525252525252525252525252525253A%2525252525252525252525252525252525252525252F%2525252525252525252525252525252525252525252Fscript.google.com%2525252525252525252525252525252525252525252Faccounts%2525252525252525252525252525252525252525253Fauthuser%2525252525252525252525252525252525252525253D3%25252525252525252525252525252525252525252526continueUrl%2525252525252525252525252525252525252525253Dhttps%252525252525252525252525252525252525252525253A%252525252525252525252525252525252525252525252F%252525252525252525252525252525252525252525252Fscript.google.com%252525252525252525252525252525252525252525252Faccounts%252525252525252525252525252525252525252525253Fauthuser%252525252525252525252525252525252525252525253D3%2525252525252525252525252525252525252525252526continueUrl%252525252525252525252525252525252525252525253Dhttps%25252525252525252525252525252525252525252525253A%25252525252525252525252525252525252525252525252F%25252525252525252525252525252525252525252525252Fscript.google.com%25252525252525252525252525252525252525252525252Faccounts%25252525252525252525252525252525252525252525253Fauthuser%25252525252525252525252525252525252525252525253D3%252525252525252525252525252525252525252525252526continueUrl%25252525252525252525252525252525252525252525253Dhttps%2525252525252525252525252525252525252525252525253A%2525252525252525252525252525252525252525252525252F%2525252525252525252525252525252525252525252525252Fscript.google.com%2525252525252525252525252525252525252525252525252Foauthcallback%2525252525252525252525252525252525252525252525253Fstate%2525252525252525252525252525252525252525252525253DACjPJvHX5GMhaFVUOqFBG637dFhVJSh1A7GZZnQCWMRU3EfhAPZIgz9naYuWdO9CsSe6nL9z4maY3ALsKglcejLljtQyP-g0MxOlqdWuu0OsN6T4Ifekz3fJrrDc6QdBVwbUewzjM4lHGhXSsAd4Wnm0XAjpXtb8mAalnqBK9RVh8iw%25252525252525252525252525252525252525252525252526iss%2525252525252525252525252525252525252525252525253Dhttps%252525252525252525252525252525252525252525252525253A%252525252525252525252525252525252525252525252525252F%252525252525252525252525252525252525252525252525252Faccounts.google.com%25252525252525252525252525252525252525252525252526scope%2525252525252525252525252525252525252525252525253Dhttps%252525252525252525252525252525252525252525252525253A%252525252525252525252525252525252525252525252525252F%252525252525252525252525252525252525252525252525252Fwww.googleapis.com%252525252525252525252525252525252525252525252525252Fauth%252525252525252525252525252525252525252525252525252Fspreadsheets%2525252525252525252525252525252525252525252525252Bhttps%252525252525252525252525252525252525252525252525253A%252525252525252525252525252525252525252525252525252F%252525252525252525252525252525252525252525252525252Fwww.googleapis.com%252525252525252525252525252525252525252525252525252Fauth%252525252525252525252525252525252525252525252525252Fscript.send_mail%25252525252525252525252525252525252525252525252526authuser%2525252525252525252525252525252525252525252525253D3%25252525252525252525252525252525252525252525252526prompt%2525252525252525252525252525252525252525252525253Dconsent%25252525252525252525252525252525252525252525252526version_info%2525252525252525252525252525252525252525252525253DCmxfU1ZJX0VMWGY0cUQxX0pJREdBTWlQMDFCUlVSSVpsOXhXRUZ1U1dOc04yUnpYek01TUhGNE4ydzBRVEpWV0RkMmVsSkxSV2R0WDBOVlRrMWtNblZhU2pkdlUyOXdWMWhJYURoYVIxZ3hZd18";
+  // ============================================================
+
+  let selectedRating = null;
+
+  // Ocultar aviso si ya está configurado
+  if (SCRIPT_URL !== "TU_URL_AQUI") {
+    document.getElementById('configNotice').style.display = 'none';
+  }
+
+  function selectSmile(btn) {
+    document.querySelectorAll('.smile-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedRating = btn.dataset.value;
+  }
+
+  async function submitRating() {
+    if (SCRIPT_URL === "TU_URL_AQUI") {
+      showToast("⚙️ Configura primero la URL del script", "error");
+      return;
+    }
+    if (!selectedRating) {
+      showToast("Por favor, selecciona una valoración", "error");
+      return;
+    }
+
+    const btn = document.getElementById('btnEnviar');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Enviando...';
+
+    const payload = {
+      valoracion: selectedRating,
+      comentario: document.getElementById('comment').value.trim()
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      // no-cors no devuelve respuesta, asumimos éxito
+      showToast("✓ Valoración enviada. ¡Gracias!", "success");
+      selectedRating = null;
+      document.querySelectorAll('.smile-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('comment').value = '';
+
+    } catch (err) {
+      showToast("Error al enviar. Inténtalo de nuevo.", "error");
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = 'Enviar valoración';
+  }
+
+  function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast ${type} show`;
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+</script>
+</body>
+</html>
