@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Korporatech – Valoración</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#CC2229">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Korporatech">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
 
@@ -17,6 +23,18 @@
     --red: #ff4757;
     --orange: #ffa502;
     --green: #2ed573;
+    --shadow: rgba(0,0,0,0.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --surface: #2a2a2a;
+      --border: #444444;
+      --text: #f0f0f0;
+      --muted: #999999;
+      --shadow: rgba(0,0,0,0.5);
+    }
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,6 +52,13 @@
     padding: 40px 20px;
   }
 
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: linear-gradient(180deg, rgba(30,30,30,0.95) 0%, rgba(10,10,10,0.97) 100%),
+                  url('1772319310752_image.png') center center / cover no-repeat fixed;
+    }
+  }
+
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -42,7 +67,7 @@
     padding: 56px 48px;
     max-width: 560px;
     width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    box-shadow: 0 20px 60px var(--shadow);
     animation: fadeUp 0.6s ease both;
   }
 
@@ -55,23 +80,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
   }
 
   .logo-img {
-    width: 260px;
+    width: 320px;
     max-width: 100%;
     height: auto;
   }
 
   .headline {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
   }
 
   .headline h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
+    font-size: 30px;
     letter-spacing: 2px;
     color: var(--text);
     line-height: 1.2;
@@ -96,23 +121,32 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     width: 110px;
   }
 
-  .smile-btn:hover { transform: translateY(-4px); }
+  .smile-btn:hover { transform: translateY(-6px); }
 
   .smile-btn .emoji {
     font-size: 44px;
     line-height: 1;
-    filter: grayscale(60%);
-    transition: filter 0.2s, transform 0.2s;
+    filter: grayscale(70%);
+    transition: filter 0.25s, transform 0.25s;
+    display: inline-block;
   }
 
-  .smile-btn:hover .emoji,
+  .smile-btn:hover .emoji { filter: none; transform: scale(1.2); }
+
   .smile-btn.active .emoji {
     filter: none;
-    transform: scale(1.15);
+    animation: bounce 0.5s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  @keyframes bounce {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.4) rotate(-8deg); }
+    70%  { transform: scale(0.9) rotate(4deg); }
+    100% { transform: scale(1.15); }
   }
 
   .smile-btn .label {
@@ -121,6 +155,7 @@
     letter-spacing: 0.5px;
     color: var(--muted);
     text-transform: uppercase;
+    transition: color 0.2s;
   }
 
   .smile-btn.red    { --clr: var(--red);    }
@@ -130,24 +165,23 @@
   .smile-btn.active,
   .smile-btn:hover {
     border-color: var(--clr);
-    background: color-mix(in srgb, var(--clr) 6%, #ffffff);
-    box-shadow: 0 4px 16px color-mix(in srgb, var(--clr) 25%, transparent);
+    background: color-mix(in srgb, var(--clr) 8%, var(--surface));
+    box-shadow: 0 6px 20px color-mix(in srgb, var(--clr) 25%, transparent);
   }
 
-  .smile-btn.active .label { color: var(--clr); }
+  .smile-btn.active .label { color: var(--clr); font-weight: 700; }
 
   .comment-label {
     font-size: 14px;
     color: var(--muted);
     margin-bottom: 12px;
-    letter-spacing: 0.3px;
   }
 
-  .comment-label strong { color: var(--text); font-weight: 500; }
+  .comment-label strong { color: var(--text); font-weight: 600; }
 
   textarea {
     width: 100%;
-    background: #f8f8f8;
+    background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 16px;
@@ -177,19 +211,17 @@
     letter-spacing: 0.5px;
     cursor: pointer;
     transition: opacity 0.2s, transform 0.15s;
-    position: relative;
   }
 
-  .btn-submit:hover   { opacity: 0.9; transform: translateY(-1px); }
+  .btn-submit:hover   { opacity: 0.9; transform: translateY(-2px); }
   .btn-submit:active  { transform: translateY(0); }
   .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-  /* Spinner inside button */
   .spinner {
     display: inline-block;
     width: 16px; height: 16px;
     border: 2px solid rgba(255,255,255,0.4);
-    border-top-color: #ffffff;
+    border-top-color: #fff;
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
     vertical-align: middle;
@@ -197,7 +229,169 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Toast */
+  /* ── PANTALLA GRACIAS ── */
+  .thanks-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0;
+    animation: fadeUp 0.5s ease both;
+  }
+  .thanks-screen.show { display: flex; }
+
+  .thanks-emoji {
+    font-size: 80px;
+    animation: popIn 0.6s cubic-bezier(.34,1.56,.64,1) both;
+    margin-bottom: 16px;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .stars {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .star {
+    font-size: 26px;
+    animation: starPop 0.4s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  .star:nth-child(1) { animation-delay: 0.1s; }
+  .star:nth-child(2) { animation-delay: 0.2s; }
+  .star:nth-child(3) { animation-delay: 0.3s; }
+  .star:nth-child(4) { animation-delay: 0.4s; }
+  .star:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes starPop {
+    from { transform: scale(0) rotate(-30deg); opacity: 0; }
+    to   { transform: scale(1) rotate(0); opacity: 1; }
+  }
+
+  .thanks-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .thanks-sub {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 340px;
+  }
+
+  .btn-volver {
+    padding: 12px 32px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-volver:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  /* ── QR ── */
+  .qr-wrap {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .btn-qr {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-qr:hover { border-color: var(--accent); color: var(--accent); }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 36px;
+    text-align: center;
+    max-width: 300px;
+    width: 90%;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .modal h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .modal p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  #qrContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .btn-print {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    margin-right: 8px;
+    transition: opacity 0.2s;
+  }
+  .btn-print:hover { opacity: 0.85; }
+
+  .btn-close-modal {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .btn-close-modal:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── TOAST ── */
   .toast {
     position: fixed;
     bottom: 32px;
@@ -210,221 +404,189 @@
     transition: transform 0.4s cubic-bezier(.22,1,.36,1), opacity 0.3s;
     opacity: 0;
     white-space: nowrap;
-    color: #ffffff;
+    color: #fff;
+    z-index: 999;
   }
   .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
   .toast.success { background: var(--green); }
-  .toast.error   { background: var(--red); color: #fff; }
+  .toast.error   { background: var(--red); }
 
-  /* Config notice */
-  .config-notice {
-    background: rgba(255,165,0,0.1);
-    border: 1px solid rgba(255,165,0,0.3);
-    border-radius: 10px;
-    padding: 12px 16px;
-    font-size: 12px;
-    color: #ffa502;
-    margin-top: 20px;
-    text-align: center;
-    line-height: 1.5;
-  }
-  .config-notice strong { color: #ffcc70; }
-
-  /* ── TABLET ── */
+  /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
-    body {
-      padding: 20px 16px;
-      justify-content: flex-start;
-      padding-top: 30px;
-    }
-
-    .card {
-      padding: 36px 24px;
-      border-radius: 18px;
-    }
-
-    .logo-img {
-      width: 200px;
-    }
-
-    .logo-wrap {
-      margin-bottom: 28px;
-    }
-
-    .headline {
-      margin-bottom: 28px;
-    }
-
-    .headline h1 {
-      font-size: 22px;
-    }
-
-    .smiles {
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-
-    .smile-btn {
-      width: 90px;
-      padding: 14px 10px;
-    }
-
-    .smile-btn .emoji {
-      font-size: 36px;
-    }
-
-    .smile-btn .label {
-      font-size: 11px;
-    }
-
-    textarea {
-      font-size: 16px; /* evita zoom automático en iOS */
-      min-height: 80px;
-    }
-
-    .btn-submit {
-      padding: 14px;
-      font-size: 14px;
-      margin-top: 20px;
-    }
-
-    .toast {
-      font-size: 13px;
-      padding: 12px 20px;
-      bottom: 20px;
-      white-space: normal;
-      text-align: center;
-      width: 90%;
-    }
+    body { padding: 20px 16px; justify-content: flex-start; padding-top: 30px; }
+    .card { padding: 36px 24px; border-radius: 18px; }
+    .logo-img { width: 220px; }
+    .logo-wrap { margin-bottom: 24px; }
+    .headline { margin-bottom: 24px; }
+    .headline h1 { font-size: 24px; }
+    .smiles { gap: 12px; margin-bottom: 32px; }
+    .smile-btn { width: 90px; padding: 14px 10px; }
+    .smile-btn .emoji { font-size: 36px; }
+    .smile-btn .label { font-size: 11px; }
+    textarea { font-size: 16px; min-height: 80px; }
+    .btn-submit { padding: 14px; font-size: 14px; margin-top: 20px; }
+    .toast { font-size: 13px; padding: 12px 20px; bottom: 20px; white-space: normal; text-align: center; width: 90%; }
   }
 
-  /* ── MÓVIL MUY PEQUEÑO ── */
   @media (max-width: 360px) {
-    .card {
-      padding: 28px 16px;
-    }
-
-    .smile-btn {
-      width: 78px;
-      padding: 12px 8px;
-    }
-
-    .smile-btn .emoji {
-      font-size: 30px;
-    }
-
-    .headline h1 {
-      font-size: 20px;
-    }
+    .card { padding: 28px 16px; }
+    .smile-btn { width: 78px; padding: 12px 8px; }
+    .smile-btn .emoji { font-size: 30px; }
+    .headline h1 { font-size: 20px; }
   }
 </style>
 </head>
 <body>
 
 <div class="card">
-  <!-- Logo -->
-  <div class="logo-wrap">
-    <img class="logo-img" src="LogoKORPORATECHCLAIM20252048x402.png" alt="Korporatech">
+
+  <!-- FORMULARIO -->
+  <div id="formView">
+    <div class="logo-wrap">
+      <img class="logo-img" src="LogoKORPORATECHCLAIM20252048x402.png" alt="Korporatech">
+    </div>
+
+    <div class="headline">
+      <h1>¿Cómo valoraría<br><span>nuestra atención</span>?</h1>
+    </div>
+
+    <div class="smiles">
+      <button class="smile-btn red"    data-value="Mala"    onclick="selectSmile(this)">
+        <span class="emoji">😞</span>
+        <span class="label">Mala</span>
+      </button>
+      <button class="smile-btn orange" data-value="Regular" onclick="selectSmile(this)">
+        <span class="emoji">😐</span>
+        <span class="label">Regular</span>
+      </button>
+      <button class="smile-btn green"  data-value="Buena"   onclick="selectSmile(this)">
+        <span class="emoji">😊</span>
+        <span class="label">Buena</span>
+      </button>
+    </div>
+
+    <div class="comment-label">
+      <strong>¿Tiene algo que añadir?</strong>
+    </div>
+    <textarea id="comment" placeholder="Escriba aquí sus comentarios o sugerencias..."></textarea>
+
+    <button class="btn-submit" id="btnEnviar" onclick="submitRating()">Enviar valoración</button>
+
+    <div class="qr-wrap">
+      <button class="btn-qr" onclick="showQR()">📱 Ver código QR para imprimir</button>
+    </div>
   </div>
 
-  <!-- Headline -->
-  <div class="headline">
-    <h1>¿Cómo valoraría<br><span>nuestra atención</span>?</h1>
+  <!-- PANTALLA GRACIAS -->
+  <div class="thanks-screen" id="thanksView">
+    <div class="thanks-emoji" id="thanksEmoji">😊</div>
+    <div class="stars">
+      <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+      <span class="star">⭐</span><span class="star">⭐</span>
+    </div>
+    <div class="thanks-title">¡Muchas gracias!</div>
+    <div class="thanks-sub">Su opinión es muy importante para nosotros.<br>Seguiremos mejorando para ofrecerle el mejor servicio.</div>
+    <button class="btn-volver" onclick="volverAlFormulario()">← Enviar otra valoración</button>
   </div>
 
-  <!-- Smiles -->
-  <div class="smiles">
-    <button class="smile-btn red"    data-value="Mala"    onclick="selectSmile(this)">
-      <span class="emoji">😞</span>
-      <span class="label">Mala</span>
-    </button>
-    <button class="smile-btn orange" data-value="Regular" onclick="selectSmile(this)">
-      <span class="emoji">😐</span>
-      <span class="label">Regular</span>
-    </button>
-    <button class="smile-btn green"  data-value="Buena"   onclick="selectSmile(this)">
-      <span class="emoji">😊</span>
-      <span class="label">Buena</span>
-    </button>
-  </div>
+</div>
 
-  <!-- Comment -->
-  <div class="comment-label">
-    <strong>¿Tiene algo que añadir?</strong>
-  </div>
-  <textarea id="comment" placeholder="Escriba aquí sus comentarios o sugerencias..."></textarea>
-
-  <!-- Submit -->
-  <button class="btn-submit" id="btnEnviar" onclick="submitRating()">Enviar valoración</button>
-
-  <!-- Aviso si no está configurado el script -->
-  <div class="config-notice" id="configNotice">
-    ⚙️ <strong>Pendiente de configurar:</strong> Reemplaza <code>TU_URL_AQUI</code> en el código con la URL de tu Google Apps Script.
+<!-- MODAL QR -->
+<div class="modal-overlay" id="qrModal" onclick="closeQR(event)">
+  <div class="modal">
+    <h3>Código QR</h3>
+    <p>Imprímelo y ponlo en recepción para que tus clientes accedan fácilmente</p>
+    <div id="qrContainer"></div>
+    <br>
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimir</button>
+    <button class="btn-close-modal" onclick="closeQRBtn()">Cerrar</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-  // ============================================================
-  //  ⚙️  PON AQUÍ LA URL DE TU GOOGLE APPS SCRIPT
-  //  (la obtienes al publicar el script como "aplicación web")
-  // ============================================================
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzT3zaNob64-XO6W_2_Ykp2hQoKxY1FQnPnmCX78w67_FCx2hXQyamS_je09eJmiwI8RQ/exec";
-  // ============================================================
 
   let selectedRating = null;
-
-  // Ocultar aviso si ya está configurado
-  if (SCRIPT_URL !== "TU_URL_AQUI") {
-    document.getElementById('configNotice').style.display = 'none';
-  }
+  let qrGenerated = false;
 
   function selectSmile(btn) {
     document.querySelectorAll('.smile-btn').forEach(b => b.classList.remove('active'));
+    const emoji = btn.querySelector('.emoji');
     btn.classList.add('active');
+    emoji.style.animation = 'none';
+    emoji.offsetHeight;
+    emoji.style.animation = '';
     selectedRating = btn.dataset.value;
   }
 
   async function submitRating() {
-    if (SCRIPT_URL === "TU_URL_AQUI") {
-      showToast("⚙️ Configura primero la URL del script", "error");
-      return;
-    }
     if (!selectedRating) {
       showToast("Por favor, selecciona una valoración", "error");
       return;
     }
-
     const btn = document.getElementById('btnEnviar');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> Enviando...';
-
-    const payload = {
-      valoracion: selectedRating,
-      comentario: document.getElementById('comment').value.trim()
-    };
 
     try {
       await fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          valoracion: selectedRating,
+          comentario: document.getElementById('comment').value.trim()
+        })
       });
-
-      // no-cors no devuelve respuesta, asumimos éxito
-      showToast("✓ Valoración enviada. ¡Gracias!", "success");
-      selectedRating = null;
-      document.querySelectorAll('.smile-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('comment').value = '';
-
+      mostrarGracias();
     } catch (err) {
       showToast("Error al enviar. Inténtalo de nuevo.", "error");
+      btn.disabled = false;
+      btn.innerHTML = 'Enviar valoración';
     }
+  }
 
+  function mostrarGracias() {
+    const emojis = { Buena: '😊', Regular: '😐', Mala: '😞' };
+    document.getElementById('thanksEmoji').textContent = emojis[selectedRating] || '😊';
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('thanksView').classList.add('show');
+  }
+
+  function volverAlFormulario() {
+    selectedRating = null;
+    document.getElementById('comment').value = '';
+    document.querySelectorAll('.smile-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('thanksView').classList.remove('show');
+    document.getElementById('formView').style.display = 'block';
+    const btn = document.getElementById('btnEnviar');
     btn.disabled = false;
     btn.innerHTML = 'Enviar valoración';
+  }
+
+  function showQR() {
+    document.getElementById('qrModal').classList.add('show');
+    if (!qrGenerated) {
+      new QRCode(document.getElementById("qrContainer"), {
+        text: window.location.href,
+        width: 200, height: 200,
+        colorDark: "#CC2229",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      qrGenerated = true;
+    }
+  }
+
+  function closeQR(e) {
+    if (e.target === document.getElementById('qrModal')) closeQRBtn();
+  }
+
+  function closeQRBtn() {
+    document.getElementById('qrModal').classList.remove('show');
   }
 
   function showToast(msg, type) {
@@ -432,6 +594,10 @@
     t.textContent = msg;
     t.className = `toast ${type} show`;
     setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
   }
 </script>
 </body>
