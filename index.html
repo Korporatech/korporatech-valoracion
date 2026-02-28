@@ -8,12 +8,12 @@
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
 
   :root {
-    --bg: #0d0f14;
-    --surface: #161920;
-    --border: #22262f;
+    --bg: #2a2a2a;
+    --surface: #333333;
+    --border: #444444;
     --accent: #00e5c0;
     --text: #e8eaf0;
-    --muted: #7a7f8e;
+    --muted: #9a9a9a;
     --red: #ff4757;
     --orange: #ffa502;
     --green: #2ed573;
@@ -22,7 +22,8 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--bg);
+    background: linear-gradient(180deg, #6a6a6a 0%, #2a2a2a 100%);
+    background-attachment: fixed;
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
@@ -31,7 +32,6 @@
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,229,192,0.08), transparent);
   }
 
   .card {
@@ -166,12 +166,12 @@
     margin-top: 28px;
     width: 100%;
     padding: 16px;
-    background: linear-gradient(90deg, var(--accent), #0090ff);
+    background: linear-gradient(90deg, #ff4757, #ffa502, #2ed573);
     border: none;
     border-radius: 12px;
-    color: #0d0f14;
+    color: #ffffff;
     font-family: 'DM Sans', sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 15px;
     letter-spacing: 0.5px;
     cursor: pointer;
