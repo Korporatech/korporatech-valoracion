@@ -8,12 +8,12 @@
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
 
   :root {
-    --bg: #2a2a2a;
-    --surface: #333333;
-    --border: #444444;
-    --accent: #00e5c0;
-    --text: #e8eaf0;
-    --muted: #9a9a9a;
+    --bg: #f2f2f2;
+    --surface: #ffffff;
+    --border: #e0e0e0;
+    --accent: #CC2229;
+    --text: #1a1a1a;
+    --muted: #888888;
     --red: #ff4757;
     --orange: #ffa502;
     --green: #2ed573;
@@ -22,8 +22,8 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: linear-gradient(180deg, #6a6a6a 0%, #2a2a2a 100%);
-    background-attachment: fixed;
+    background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(216,216,216,0.90) 100%),
+                url('1772319310752_image.png') center center / cover no-repeat fixed;
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
@@ -37,11 +37,12 @@
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
     border-radius: 24px;
     padding: 56px 48px;
     max-width: 560px;
     width: 100%;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
     animation: fadeUp 0.6s ease both;
   }
 
@@ -129,8 +130,8 @@
   .smile-btn.active,
   .smile-btn:hover {
     border-color: var(--clr);
-    background: color-mix(in srgb, var(--clr) 8%, transparent);
-    box-shadow: 0 0 20px color-mix(in srgb, var(--clr) 20%, transparent);
+    background: color-mix(in srgb, var(--clr) 6%, #ffffff);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--clr) 25%, transparent);
   }
 
   .smile-btn.active .label { color: var(--clr); }
@@ -146,7 +147,7 @@
 
   textarea {
     width: 100%;
-    background: var(--bg);
+    background: #f8f8f8;
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 16px;
@@ -187,8 +188,8 @@
   .spinner {
     display: inline-block;
     width: 16px; height: 16px;
-    border: 2px solid rgba(13,15,20,0.3);
-    border-top-color: #0d0f14;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #ffffff;
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
     vertical-align: middle;
@@ -209,7 +210,7 @@
     transition: transform 0.4s cubic-bezier(.22,1,.36,1), opacity 0.3s;
     opacity: 0;
     white-space: nowrap;
-    color: #0d0f14;
+    color: #ffffff;
   }
   .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
   .toast.success { background: var(--green); }
@@ -228,6 +229,94 @@
     line-height: 1.5;
   }
   .config-notice strong { color: #ffcc70; }
+
+  /* ── TABLET ── */
+  @media (max-width: 600px) {
+    body {
+      padding: 20px 16px;
+      justify-content: flex-start;
+      padding-top: 30px;
+    }
+
+    .card {
+      padding: 36px 24px;
+      border-radius: 18px;
+    }
+
+    .logo-img {
+      width: 200px;
+    }
+
+    .logo-wrap {
+      margin-bottom: 28px;
+    }
+
+    .headline {
+      margin-bottom: 28px;
+    }
+
+    .headline h1 {
+      font-size: 22px;
+    }
+
+    .smiles {
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .smile-btn {
+      width: 90px;
+      padding: 14px 10px;
+    }
+
+    .smile-btn .emoji {
+      font-size: 36px;
+    }
+
+    .smile-btn .label {
+      font-size: 11px;
+    }
+
+    textarea {
+      font-size: 16px; /* evita zoom automático en iOS */
+      min-height: 80px;
+    }
+
+    .btn-submit {
+      padding: 14px;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    .toast {
+      font-size: 13px;
+      padding: 12px 20px;
+      bottom: 20px;
+      white-space: normal;
+      text-align: center;
+      width: 90%;
+    }
+  }
+
+  /* ── MÓVIL MUY PEQUEÑO ── */
+  @media (max-width: 360px) {
+    .card {
+      padding: 28px 16px;
+    }
+
+    .smile-btn {
+      width: 78px;
+      padding: 12px 8px;
+    }
+
+    .smile-btn .emoji {
+      font-size: 30px;
+    }
+
+    .headline h1 {
+      font-size: 20px;
+    }
+  }
 </style>
 </head>
 <body>
